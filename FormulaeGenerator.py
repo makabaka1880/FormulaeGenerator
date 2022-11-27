@@ -39,6 +39,14 @@ constants = [
     "z"
 ];
 
+signs = constants + [
+    "+\infty",
+    "-\infty",
+    "\pm\infty",
+    "\mathrm{d}",
+    "\sigma",
+    "\delta"
+]
 funcs = [
     "\sin",
     "\cos",
@@ -46,13 +54,33 @@ funcs = [
     "\log",
     "\lim_{x\\to0^{+}}",
     "\lim_{x\\to0^{-}}",
-    "\lim_{x\\to+infty^{-}}",
-    "\lim_{x\\to-infty^{+}}"
+    "\lim_{x\\to+\infty^{-}}",
+    "\lim_{x\\to-\infty^{+}}"
 ]
 coolSigns = [
     "\\Sigma",
     "\\int"
-]   
+]
+compare = [
+    "\\neq",
+    "\leq",
+    "\geq",
+    "\lor",
+    "\land"
+]
+causes = [
+    "\Rightarrow",
+    "\Leftarrow"
+]
+words = [
+    "Becauses of",
+    "It is now hard to find out that",
+    "It can be implied that",
+    "So",
+    "Clearly",
+    "From that",
+    "In summary of the previous equation"
+]
 def createMonomial(recur):
     chc = randint(0, 2);
     base = choice(constants);
@@ -102,18 +130,42 @@ def createComplexMonomial(base = ""):
 print(createComplexMonomial());
 
 def createExpression():
-    return 
+    chc = randint(0, 3);
+    base = createComplexMonomial();
+    if chc == 0:
+        return base
+    elif chc == 1:
+        return choice(coolSigns) + "^{" + createComplexMonomial() + "}_{" +createComplexMonomial() + "}";
+    elif chc == 2:
+        return createComplexMonomial() + choice(coolSigns) + "^{" + createComplexMonomial() + "}_{" +createComplexMonomial() + "}";
+    else:
+        chc = randint(0, 2);
+        if chc == 0:
+            return createComplexMonomial() + choice(coolSigns) + "^{" + createExpression() + "}_{" +createExpression() + "}";
+        elif chc == 1:
+            return createComplexMonomial() + choice(coolSigns) + "^{" + createComplexMonomial() + "}_{" +createExpression() + "}";
+        else:
+            return createComplexMonomial() + choice(coolSigns) + "^{" + createComplexMonomial() + "}_{" +createComplexMonomial() + "}";
 def createCoolExpressionOrEquation(isEquation):
     if isEquation:
-        return createComplex
-def main():
-    return createComplexMonomial();
+        chc = randint(0, 1);
+        if chc:
+            return createMonomial(1) + choice(compare) + createExpression()
+        else:
+            return createMonomial(1) + choice(causes) + createExpression()
+def main(times):
+    file = open('output.ltx', mode='x');
+    file.write("\documentstyle{article}\n\\begin{document}\n")
+    file.close()
+    file = open ('output.ltx', mode = "a+");
+    prep = createCoolExpressionOrEquation(True)
+    file.write("This material proves that \n $$ " + prep + " $$\\\\ \n ")
+    file.write("\nFirstly, \n $$ " + createCoolExpressionOrEquation(True) + " $$\\\\\n So we can suppose \n $$ " + createCoolExpressionOrEquation(True) + "$$\\\\\n ")
+    for i in range(0, times - 1):
+        file.write(choice(words) + "\\\\\n$$")
+        file.write(createCoolExpressionOrEquation(True) + "$$\\\\\n")
+    file.write("\\textbf{The preposition of $" + prep + "$ has been proved.}\n\end{document}");
+    file.close()
 def run():
-    u = "https://latex.codecogs.com/svg.image?" + main();
-    print(u);
-print("------\n------\nMAIN PROGRAM:\n")
-print("Please open the following url in a web browser:")
-print("------")
-print(run())
-print("------")
-print("------\nMAIN PROGRAM ENDED\n")
+    return main(randint(2, 10));
+r = run()
