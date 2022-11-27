@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 echo "Deleting outdated cache";
-rm -rf out.ltx;
+rm -rf output.ltx;
 echo "Running script";
 python3 FormulaeGenerator.py;
 echo "Publishin to ~/out.pdf";

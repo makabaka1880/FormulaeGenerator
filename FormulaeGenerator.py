@@ -74,7 +74,7 @@ causes = [
 ]
 words = [
     "Becauses of",
-    "It is now hard to find out that",
+    "It is not hard to find out that",
     "It can be implied that",
     "So",
     "Clearly",
