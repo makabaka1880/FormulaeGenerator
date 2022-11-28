@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from random import *;
 
 constants = [
@@ -65,15 +67,11 @@ compare = [
     "\\neq",
     "\leq",
     "\geq",
-    "\lor",
-    "\land"
-]
-causes = [
-    "\Rightarrow",
-    "\Leftarrow"
+    "="
 ]
 words = [
-    "Becauses of",
+    "Because of",
+    "Therefore",
     "It is not hard to find out that",
     "It can be implied that",
     "So",
@@ -108,7 +106,7 @@ def createPolynomial():
         pol += choice(["+", "-", "\pm"]) + " " + createMonomial(0);
     return pol
 
-def createComplexMonomial(base = ""):
+def createComplexMonomial(base = createMonomial(0)):
     _chc = randint(0, 2);
     if _chc == 0:
         base = createPolynomial();
@@ -125,9 +123,7 @@ def createComplexMonomial(base = ""):
             else:
                 return "\\frac{ (" + base + ") }{ " + createComplexMonomial() + " }"
         else: 
-            return createComplexMonomial();
-        
-print(createComplexMonomial());
+            return createComplexMonomial(); 
 
 def createExpression():
     chc = randint(0, 3);
@@ -147,25 +143,43 @@ def createExpression():
         else:
             return createComplexMonomial() + choice(coolSigns) + "^{" + createComplexMonomial() + "}_{" +createComplexMonomial() + "}";
 def createCoolExpressionOrEquation(isEquation):
-    if isEquation:
-        chc = randint(0, 1);
-        if chc:
-            return createMonomial(1) + choice(compare) + createExpression()
-        else:
-            return createMonomial(1) + choice(causes) + createExpression()
+    return createMonomial(1) + choice(compare) + createExpression()
 def main(times):
-    file = open('output.ltx', mode='x');
-    file.write("\documentstyle{article}\n\\begin{document}\n")
-    file.close()
-    file = open ('output.ltx', mode = "a+");
+    print("<!DOCTYPE>");
+    print("<html>");
+    print("    <head>");
+    print("""
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>
+        MathJax = {
+            tex: {
+                inlineMath: [
+                    ['$', '$'],
+                    ['\\(', '\\)']
+                ],
+                displayMath: [
+                    ['$$', '$$'],
+                   ['\\[', '\\]']
+                ],
+            },
+            svg: {
+                fontCache: 'global'
+             }
+        };
+        </script>
+        """);
+    print("    </head>");
+    print("    <body>");
     prep = createCoolExpressionOrEquation(True)
-    file.write("This material proves that \n $$ " + prep + " $$\\\\ \n ")
-    file.write("\nFirstly, \n $$ " + createCoolExpressionOrEquation(True) + " $$\\\\\n So we can suppose \n $$ " + createCoolExpressionOrEquation(True) + "$$\\\\\n ")
+    print("        <h1> Prove of $" + prep + "$</h1>");
+    prep = createCoolExpressionOrEquation(True)
+    print("        <p> This material proves that \n $$ " + prep + " $$ <br/><br/>\n ")
+    print("\nFirstly, \n$$ " + createCoolExpressionOrEquation(True) + " $$\\\\\n So we can suppose \n $$ " + createCoolExpressionOrEquation(True) + "$$\\\\\n ")
     for i in range(0, times - 1):
-        file.write(choice(words) + "\\\\\n$$")
-        file.write(createCoolExpressionOrEquation(True) + "$$\\\\\n")
-    file.write("\\textbf{The preposition of $" + prep + "$ has been proved.}\n\end{document}");
-    file.close()
+        print(choice(words) + "<br/><br/>\n$$")
+        print(createCoolExpressionOrEquation(True) + "$$<br/><br/>\n")
+    print("<b>The preposition $" + prep + "$ has been proved.\n</b>");
 def run():
-    return main(randint(2, 10));
+    return main(100); # Set to any number
 r = run()

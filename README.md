@@ -24,8 +24,8 @@ Generate a monomial
 ```
 Generate a polynomial
 	| create a var named "base" that stores the polynomial and init it with a monomial
-	| Recur for a random number between 1 ~ 10 < --------------------------
-	|																																			|
+	| Recur for a random number between 1 ~ 10 < ------------------------
+	|								                               		|
 	---- add, minus, or "plus-minus" another generated monomial to base - |
 	|
 	Create a complex monomial
@@ -33,20 +33,20 @@ Generate a polynomial
 
 ```
 Generate a complex monomial < -------------------------------------
-	RECIEVE: Parameter of "base"																		|
-	Override content of base from one of:														|
-	|	|																															|
-	|	---- Generate a polynomial																		|
-	|	---- Generate a monomial, pass down "it does not recur"				|
-	|	---- Does not override																				|
-	choose from:																										|
-	|	|																															|
-	|	---- base																											|
-	|	---- choose from:																							|
-	|		|																														|
-	|		---- Create fraction "<base>/Monomial"											|
-	|		---- Create fraction "<base>/(Polynomial)"									|
-	|		---- Recur ------------------------------------------------ |
+	RECIEVE: Parameter of "base"									|
+	Override content of base from one of:							|
+	|	|						                                    |
+	|	---- Generate a polynomial									|
+	|	---- Generate a monomial, pass down "it does not recur"		|
+	|	---- Does not override	                                    |
+	choose from:                        							|
+	|  |	                                                		|
+	|	---- base	                                            	|
+	|	---- choose from:											|
+	|		|	                                    				|
+	|		---- Create fraction "<base>/Monomial"					|
+	|		---- Create fraction "<base>/(Polynomial)"				|
+	|		---- Recur -------------------------------------------- |
 	Create a expression and pass down default value of "base": ""
 ```
 
@@ -70,7 +70,7 @@ Write file
 	| Create one
 	| Write header "To prove...."
 	| Recur for a random number between 2 ~ 10: < ------------------------------------
-	|																																							 	|
+	|					                       									 	|
 	---- Write a random word, next line, write a generated final equation, next line |
 ```
 
